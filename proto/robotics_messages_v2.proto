@@ -1,0 +1,29 @@
+syntax = "proto3";
+package robotics;
+import "google/protobuf/timestamp.proto";
+message Ping {
+  google.protobuf.Timestamp client_timestamp = 1;
+}
+message Pong {
+  google.protobuf.Timestamp client_timestamp = 1;
+  google.protobuf.Timestamp server_timestamp = 2;
+}
+message Telemetry {
+  string device_id = 1;
+  float temperature_celsius = 2;
+  float cpu_percent = 3;
+  float memory_percent = 4;
+  float disk_percent = 5;
+  uint64 uptime_seconds = 6;
+  string software_version = 7;
+  string model_version = 8;
+}
+message Message {
+  string id = 1;
+  google.protobuf.Timestamp timestamp = 2;
+  oneof payload {
+    Ping ping = 10;
+    Pong pong = 11;
+    Telemetry telemetry = 20;
+  }
+}
